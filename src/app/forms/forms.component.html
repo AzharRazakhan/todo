@@ -1,0 +1,119 @@
+<div class="m-5 p-5">
+  <h2>Todo Project</h2>
+  <div class="container">
+    <div class="row">
+      <div class="col-5 card">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="p-2">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email</label>
+            <input type="text" formControlName="email" class="form-control" id="emailElement"
+              [ngClass]="{ 'is-invalid': f.email.invalid && (f.email.dirty || f.email.touched || submitted) }">
+            <div *ngIf="f.email.invalid" class="invalid-feedback">
+              <div *ngIf="f.email.errors?.required" id="emailRequired">Email is required</div>
+              <div *ngIf="f.email.errors?.email" id="emailPatter">Email must be a valid email address</div>
+            </div>
+          </div>
+
+          <div class="mb-3 passowd_icon">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+           
+           <div class="row">
+            <div class="input-group">
+              <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="form-control" id="passwordElement"
+              [ngClass]="{ 'is-invalid': f.password.invalid && (f.password.dirty || f.password.touched || submitted) }">
+              <div class="input-group-prepend">
+                <div class="input-group-text">  <i class="bi eye" [ngClass]="{
+                  'bi-eye-slash': !showPassword,
+                  'bi-eye': showPassword
+                }" (click)="togglePasswordVisibility()"></i></div>
+              </div>
+          
+                        <div *ngIf="f.password.invalid || f.password.touched || f.password.dirty"  id="passwordValidation" class="invalid-feedback">
+                          <div *ngIf="f.password.errors?.required">Password is required</div>
+                          <div *ngIf="f.password.errors?.minlength">Password must be at least 6 characters</div>
+                        </div>
+            </div>
+            
+           </div>
+
+
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">About Us</label>
+            <textarea type="text" class="form-control" formControlName="aboutUs" class="form-control"
+              [ngClass]="{ 'is-invalid': f.aboutUs.invalid && (f.aboutUs.dirty || f.aboutUs.touched || submitted) }"></textarea>
+            <div *ngIf="f.aboutUs.invalid || f.aboutUs.dirty || f.aboutUs.touched" class="invalid-feedback">
+              <div *ngIf="f.aboutUs.errors?.required">About us is required</div>
+            </div>
+          </div>
+
+          <button type="submit" id="submit" class="btn btn-primary"> {{id == 0 ? 'Add' : 'Edit'}}</button>
+        </form>
+      </div>
+      <div class="col card mx-1 p-2" >
+        <div class="form-group pull-right" style="margin-bottom:16px">
+          <input type="text" [(ngModel)]="searchTerm"class="search form-control" placeholder="search Email">
+        </div>
+        <table class="table table-scroll table-striped">
+          <thead>
+            <tr>
+              <th scope="col" class="col-xs-2" (click)="sort('id')">Id <i (click)="onSortClick($event)"  class="bi-arrow-up"></i></th>
+              <th scope="col" (click)="sort('email')">Email <i (click)="onSortClick($event)"  class="bi-arrow-up"></i></th>
+              <th scope="col">Password</th>
+              <th scope="col">About us</th>
+              <th scope="col">Create Date</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr *ngFor="let item of product | search : searchTerm;let i = index;">
+              <th scope="row">{{item.id}}</th>
+              <td>{{item.email}}</td>
+              <td >
+                <div class="eyes">
+                  <p  [ngClass]="{
+                    'hidetext': !showPassword_table[i],
+                    '': showPassword_table[i]
+                  }">{{item.password}}</p>
+                  <span [ngClass]="{
+                    'bi-eye-slash': !showPassword_table[i],
+                    'bi-eye': showPassword_table[i]
+                  }" (click)="togglePasswordVisibility_table(i)"></span>
+                </div>
+            
+            </td>
+              <td>
+              <div>
+                {{(readMore[i]) ? item.aboutUs : item.aboutUs | slice:0:50}}
+                <a href="javascript:;"  (click)="readMoreToggle(item,i)">{{ readMore[i] ? 'Read Less': 'Read More' }}</a>
+            </div>
+              </td>
+              <td>
+                {{item.createAt | date}}
+              </td>
+              <td>
+                <div class="dropdown">
+                  <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <i class="bi bi-three-dots-vertical"></i>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" style="cursor: pointer;" (click)="updateData(item)">Edit<i class="bi bi-pencil"></i></a></li>
+                    <li><a class="dropdown-item" style="cursor: pointer;" (click)="removeItem(item)">Delete<i class="bi bi-trash-fill"></i></a>
+                    </li>
+                  </ul>
+                </div>
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="product.length == 0">
+          <h2>No Data Found.</h2>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

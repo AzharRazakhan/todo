@@ -1,0 +1,46 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="p-2" id="registerForm">
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Email</label>
+    <input type="text" formControlName="email" class="form-control"
+      [ngClass]="{ 'is-invalid': f.email.invalid && (f.email.dirty || f.email.touched || submitted) }">
+    <div *ngIf="f.email.invalid" class="invalid-feedback">
+      <div *ngIf="f.email.errors?.required">Email is required</div>
+      <div *ngIf="f.email.errors?.email" id="emailPatter">Email must be a valid email address</div>
+    </div>
+  </div>
+
+  <div class="mb-3 passowd_icon">
+    <label for="exampleInputPassword1" class="form-label">Password</label>
+
+    <div class="row">
+      <div class="input-group">
+        <input [type]="showPassword ? 'text' : 'password'" formControlName="password" class="form-control"
+          [ngClass]="{ 'is-invalid': f.password.invalid && (f.password.dirty || f.password.touched || submitted) }">
+        <div class="input-group-prepend">
+          <div class="input-group-text"> <i class="bi eye" [ngClass]="{
+            'bi-eye-slash': !showPassword,
+            'bi-eye': showPassword
+          }" (click)="togglePasswordVisibility()"></i></div>
+        </div>
+
+        <div *ngIf="f.password.invalid || f.password.touched || f.password.dirty" class="invalid-feedback">
+          <div *ngIf="f.password.errors?.required">Password is required</div>
+          <div *ngIf="f.password.errors?.minlength">Password must be at least 6 characters</div>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">About Us</label>
+    <textarea type="text" class="form-control" formControlName="aboutUs" class="form-control"
+      [ngClass]="{ 'is-invalid': f.aboutUs.invalid && (f.aboutUs.dirty || f.aboutUs.touched || submitted) }"></textarea>
+    <div *ngIf="f.aboutUs.invalid || f.aboutUs.dirty || f.aboutUs.touched" class="invalid-feedback">
+      <div *ngIf="f.aboutUs.errors?.required">About us is required</div>
+    </div>
+  </div>
+
+  <button type="submit" id="submit" class="btn btn-primary"> {{id == 0 ? 'Add' : 'Edit'}} </button>
+</form>

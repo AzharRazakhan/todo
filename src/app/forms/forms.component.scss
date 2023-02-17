@@ -1,0 +1,62 @@
+// .password-container{
+//     width: 300px;
+//     position: relative;
+//   }
+
+//   .eye {
+//     cursor: pointer;
+//     // float: right;
+//     top: -25px;
+//     right: 10px;
+//     position: relative;
+//     // cursor: pointer;
+// }
+
+.eye {
+    cursor: pointer;
+    bottom: 0;
+    right: 0;
+    position: relative;
+
+}
+
+.form-control.is-invalid {
+    background-image: none;
+}
+
+
+
+.passowd_icon {
+    position: relative;
+}
+
+.hidetext {
+    -webkit-text-security: disc;
+    /* Default */
+}
+
+.eyes {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+// .well {
+//     height: 320px;
+// }
+
+.table-scroll tbody {
+    position: absolute;
+    overflow-y: scroll;
+    height: 200px;
+}
+
+.table-scroll tr {
+    width: 100%;
+    table-layout: fixed;
+    display: inline-table;
+}
+
+// .table-scroll thead > tr > th {
+//     border: none;
+// }

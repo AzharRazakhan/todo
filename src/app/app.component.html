@@ -1,0 +1,18 @@
+<div class="m-5 p-5">
+    <h2>Todo Project</h2>
+    <div class="container">
+        <div class="row" >
+            <div class="col-5 col-md-5 card" style="height: 500px;">
+                <app-form1 [keyword]="keyword"></app-form1>
+            </div>
+            <div class="col-7 col-md-7 card" style="height: 500px;">
+                <app-table (emitter)="send($event)"></app-table>
+            </div>
+        </div>
+    </div>
+</div>
+<div
+></div>
+<router-outlet></router-outlet>
+
+

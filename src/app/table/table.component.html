@@ -1,0 +1,87 @@
+<div class="col mx-1 p-2">
+  <div class="form-group pull-right" style="margin-bottom:16px">
+    <input type="text" [(ngModel)]="searchTerm" id="searchId" (keyup)="stopData()" class="search form-control" placeholder="search Email">
+  </div>
+  <div class="table-scroll table-striped m-2" >
+    <table  class="table" >
+      <thead>
+        <tr>
+          <th scope="col" class="col-xs-2" (click)="sort('id')">Id <i (click)="onSortClick($event)"
+              class="bi-arrow-up"></i></th>
+          <th scope="col" (click)="sort('email')">Email <i (scroll)="onSortClick($event)" class="bi-arrow-up"></i></th>
+          <th scope="col">Password</th>
+          <th scope="col">About us</th>
+          <th scope="col">Create Date</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody class="search-results"
+      infiniteScroll [scrollWindow]="false" (scrolled)="onScroll()">
+        <ng-container *ngIf="( product |  search : searchTerm) as result" >
+          <tr *ngFor="let item of product | search : searchTerm;let i = index;" id="data" class="simple">
+            <th scope="row">{{item.id}}</th>
+            <td>{{item.email}}</td>
+            <td>
+              <div class="eyes">
+                <p [ngClass]="{
+                    'hidetext': !showPassword_table[i],
+                    '': showPassword_table[i]
+                  }">{{item.password}}</p>
+                <span [ngClass]="{
+                    'bi-eye-slash': !showPassword_table[i],
+                    'bi-eye': showPassword_table[i]
+                  }" (click)="togglePasswordVisibility_table(i)"></span>
+              </div>
+  
+            </td>
+            <td>
+              <div>
+                {{(readMore[i]) ? item.aboutUs : item.aboutUs | slice:0:50}}
+                <a href="javascript:;" (click)="readMoreToggle(item,i)">{{ readMore[i] ? 'Read Less': 'Read More' }}</a>
+              </div>
+            </td>
+            <td>
+              {{item.createAt | date}}
+            </td>
+            <td>
+              <div class="dropdown">
+                <button class="btn dropdown" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <i class="bi bi-three-dots-vertical"></i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li><a class="dropdown-item" style="cursor: pointer;" (click)="updateData(item)">Edit<i
+                        class="bi bi-pencil"></i></a></li>
+                  <li><a class="dropdown-item" style="cursor: pointer;" id="removeItem" (click)="removeItem(item)">Delete<i
+                        class="bi bi-trash-fill"></i></a>
+                  </li>
+                </ul>
+              </div>
+            </td>
+  
+          </tr>
+  
+  
+          <div class="item m-2"  *ngIf="!product.length">
+            <ngx-skeleton-loader [count]="7" [animation]="'progress'" [theme]="{
+          height: '50px'
+        }"></ngx-skeleton-loader>
+          </div>
+          <div  *ngIf="result.length === 0">
+            <img [src]='imagePage' style="height: 100px;" class="rounded mx-auto d-block">
+            <h2 style="text-align: center;">No Data Found.</h2>
+          
+          </div>
+  
+        </ng-container>
+        <div  *ngIf="product.length === 0">
+          <img [src]='imagePage' style="height: 100px;" class="rounded mx-auto d-block">
+          <h2 style="text-align: center;">No Data Found.</h2>
+        
+        </div>
+  
+  
+      </tbody>
+    </table>
+  </div>
+  
